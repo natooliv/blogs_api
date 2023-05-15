@@ -14,7 +14,7 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.use('/login', routerLogin);
-app.use('/user', userRouter);
+app.use('/user', userRouter.userRouter);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`

@@ -4,11 +4,12 @@ const { createToken } = require('../tokens/tokensGenerate');
 const { User } = require('../models');
 
 const allusers = async (_req, res) => {
-    const users = await userServices.allusers();
-    if (!users) {
-        return res.status(500).json({ message: 'Something went wrong' });
-    }
-    return res.status(200).json(users);
+    const users = await userServices.allUsers();
+    const novosUsuarios = users.map((objeto) => {
+        const { password: _password, ...user } = objeto.dataValues;
+        return user;
+    });
+    return res.status(200).json(novosUsuarios);
 };
 
 const createUser = async (req, res) => {
@@ -16,7 +17,7 @@ const createUser = async (req, res) => {
     const userVerify = await User.findOne({ where: { email } });
     
     if (userVerify) return res.status(409).json({ message: 'User already registered' });
-    const user = await userServices.createUser(displayName, email, password, image);
+    const user = await userServices.createUser({ displayName, email, password, image });
     const token = createToken(email);
     if (user) {
         return res.status(201).json({ token });
@@ -26,7 +27,7 @@ const createUser = async (req, res) => {
 const userIdController = async (req, res) => {
     const { id } = req.params;
     const user = await userIdToken(id);
-    if (!user) {
+    if (!user || user.dataValues === undefined) {
         return res.status(404).json({ message: 'User does not exist' });
     }
     return res.status(200).json(user);

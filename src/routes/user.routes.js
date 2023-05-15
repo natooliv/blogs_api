@@ -1,15 +1,12 @@
 const express = require('express');
-const {
-    allusers,
-    createUser,
-    userIdController,
-} = require('../controllers/user.controller');
-const { userValidation, emailValidation } = require('../middlewares/user.middleware');
-const { userToken } = require('../tokens/userToken');
+const { allusers, userIdController, createUser } = require('../controllers/user.controller');
+ const { emailValidation, userValidation } = require('../middlewares/user.middleware');
+const validateJwt = require('../middlewares/token.middlewares');
 
 const userRouter = express.Router();
-userRouter.get('/', userToken, allusers);
-userRouter.get('/:id', userToken, userIdController);
-userRouter.post('/', userValidation, emailValidation, createUser);
 
-module.exports = userRouter;
+userRouter.get('/', validateJwt, allusers);
+ userRouter.get('/:id', validateJwt, userIdController);
+ userRouter.post('/', emailValidation, userValidation, createUser);
+
+module.exports = { userRouter };
