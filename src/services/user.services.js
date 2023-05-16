@@ -6,10 +6,9 @@ const createUser = async ({ displayName, email, password, image }) =>
    User.create({ displayName, email, password, image });
 
 const getUserById = async (id) => {
-  const user = await User.findByPk(id);
-  if (!user) return false;
-  const { password: _password, ...userInfo } = user;
-  return userInfo;
+  const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+  
+  return user;
 };
 
 module.exports = {

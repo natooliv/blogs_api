@@ -1,5 +1,5 @@
 const userServices = require('../services/user.services');
-const { userIdToken } = require('../tokens/userToken');
+// const { userIdToken } = require('../tokens/userToken');
 const { createToken } = require('../tokens/tokensGenerate');
 const { User } = require('../models');
 
@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
 
 const userIdController = async (req, res) => {
     const { id } = req.params;
-    const user = await userIdToken(id);
+    const user = await userServices.getUserById(id);
     if (!user || user.dataValues === undefined) {
         return res.status(404).json({ message: 'User does not exist' });
     }
