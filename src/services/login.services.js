@@ -7,6 +7,12 @@ const userLogin = async (email, password) => {
     });
     return user;
 };
+const userEmail = async (email) => {
+   // console.log('entrou useremail', email);
+    const userEmails = await models.User.findOne({ where: { email } });
+  // console.log('saiu useremails', userEmails);
+    return userEmails;
+};
 const loginValidate = async (email, password) => {
     const results = await models.User.findOne({ where: { email, password } });
     // const emailValidate = results.find((user) => user.email === email);
@@ -16,4 +22,4 @@ const loginValidate = async (email, password) => {
     return results;
 };
 
-module.exports = { loginValidate, userLogin };
+module.exports = { loginValidate, userLogin, userEmail };

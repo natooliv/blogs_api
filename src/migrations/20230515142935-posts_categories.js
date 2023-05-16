@@ -11,8 +11,6 @@ module.exports = {
           model: 'blog_posts',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
       category_id:{
         allowNull: false,
@@ -22,8 +20,6 @@ module.exports = {
           model: 'categories',
           key: 'id',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
       },
     });
   },
