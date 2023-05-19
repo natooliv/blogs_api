@@ -19,7 +19,6 @@ const createPost = async (title, content, userId) => {
 };
 
 const categoryPost = async (postId, categoryIds) => {
-  console.log('vamos lá', categoryIds);
   const array = [];
 
   categoryIds.forEach((e) => array.push({ postId, id: e }));
